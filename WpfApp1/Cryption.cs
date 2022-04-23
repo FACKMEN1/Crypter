@@ -7,18 +7,12 @@ using System.Windows.Input;
 
 namespace Cursach
 {
-    internal class Cryption
+    public class Cryption
     {
         private char[] letters = new char[] { 'а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и',
                                                 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с',
                                                 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь',
                                                 'э', 'ю', 'я'};
-        private char[] digits = new char[] {  '1', '2', '3', '4', '5', '6', '7',
-                                                '8', '9', '0'};
-        public Cryption()
-        {
-
-        }
 
         public string Decryption(string text, string key)
         {
@@ -46,16 +40,6 @@ namespace Cursach
             return result;
         }
 
-        //private string AutoGenerateKey(int length)
-        //{
-        //    string result = "";
-        //    Random rand = new Random();
-        //    length -= rand.Next(length - 1);
-        //    for (int i = 0; i < length; i++)
-        //        result += characters[rand.Next(0, characters.Length)];
-        //    return result;
-        //}
-
         public string Encryption(string text, string key)
         {
             string result = "";
@@ -73,8 +57,10 @@ namespace Cursach
                         keyIndex = 0;
                     int newLetter = (Array.IndexOf(letters, char.ToLower(symbol)) +
                           Array.IndexOf(letters, key[keyIndex])) % letters.Length;
-
-                    result += letters[newLetter];
+                    if (char.IsUpper(symbol))
+                        result += char.ToUpper(letters[newLetter]);
+                    else
+                        result += letters[newLetter];
                     keyIndex++;
                 }
             }

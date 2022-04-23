@@ -9,6 +9,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -24,50 +25,83 @@ namespace Cursach
         public MainWindow()
         {
             InitializeComponent();
+            Option.ItemsSource = new List<string>() { "Расшифровать", "Зашифровать" };
             model = new Model();
             DataContext = model;
         }
 
-        private void Decrypt_btn_Click(object sender, RoutedEventArgs e)
+        private void Save_btn_Click(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(Key_Decr.Text) && !string.IsNullOrWhiteSpace(Key_Decr.Text))
+            try
             {
-                try 
-                {
-                    model.Decrypt(Key_Decr.Text);
-                    Decryption_text.Text = model.Text;
-                    Save_decr_btn.IsEnabled = true;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Ошибка: " + ex.Message);
-                }
-                
+                bool check = model.Save(Cryption_text.Text);
+                if (check)
+                    MessageBox.Show("Файл успешно сохранён");
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Введите ключ");
+                MessageBox.Show("Ошибка: " + ex.Message);
             }
         }
 
-        private void Encrypt_btn_Click(object sender, RoutedEventArgs e)
+        private void Option_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(Encryption_text.Text) && !string.IsNullOrWhiteSpace(Encryption_text.Text))
+            if (Option.SelectedItem.ToString() == "Расшифровать")
             {
-                if (!string.IsNullOrWhiteSpace(Key_Encr.Text) && !string.IsNullOrWhiteSpace(Key_Encr.Text))
+                Save_btn.IsEnabled = true;
+                Cryption_text.IsReadOnly = true;
+                Cryption_text.Text = "";
+            }
+            else if (Option.SelectedItem.ToString() == "Зашифровать")
+            {
+                Save_btn.IsEnabled = false;
+                Cryption_text.IsReadOnly = false;
+            }
+        }
+
+        private void Run_btn_Click(object sender, RoutedEventArgs e)
+        {
+            if (Option.Text == "Расшифровать")
+            {
+                if (!string.IsNullOrWhiteSpace(Key.Text) && !string.IsNullOrWhiteSpace(Key.Text))
                 {
-                    if (Encryption_text.Text.Length > Key_Encr.Text.Length)
+                    try
                     {
-                        try
+                        model.Decrypt(Key.Text);
+                        Cryption_text.Text = model.Text;
+
+                    }
+                    catch (Exception ex)
+                    {
+
+                        MessageBox.Show("Ошибка: " + ex.Message);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Введите ключ");
+                }
+            }
+            else if (Option.Text == "Зашифровать")
+            {
+                if (!string.IsNullOrEmpty(Cryption_text.Text) && !string.IsNullOrWhiteSpace(Cryption_text.Text))
+                {
+                    if (!string.IsNullOrWhiteSpace(Key.Text) && !string.IsNullOrWhiteSpace(Key.Text))
+                    {
+                        if (Cryption_text.Text.Length > Key.Text.Length)
                         {
-                            model.Encrypt(Encryption_text.Text, Key_Encr.Text);
-                            MessageBox.Show("Файл успешно сохранён");
-                        }catch (Exception ex)
-                        {
-                            MessageBox.Show("Ошибка: " + ex.Message);
+
+                            try
+                            {
+                                bool check = model.Encrypt(Cryption_text.Text, Key.Text);
+                                if (check)
+                                    MessageBox.Show("Файл успешно сохранён");
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show("Ошибка: " + ex.Message);
+                            }
                         }
-                        
-                        
                     }
                     else
                         MessageBox.Show("Длина ключа должна быть меньше длины текста");
@@ -80,18 +114,6 @@ namespace Cursach
                 MessageBox.Show("Введите текст для шифрования");
             }
         }
-
-        private void Save_decr_btn_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                model.Save(Decryption_text.Text);
-                MessageBox.Show("Файл успешно сохранён");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Ошибка: " + ex.Message);
-            }
-        }
     }
 }
+

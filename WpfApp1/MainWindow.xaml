@@ -5,21 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Cursach"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Шифровка" Height="475" Width="811">
     <Grid>
-        <Label Content="Расшифровать текст" HorizontalAlignment="Center" Margin="0,16,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="Decryption_text" HorizontalAlignment="Center" Margin="0,42,0,0" TextWrapping="Wrap" Text=""
-                   VerticalAlignment="Top" Width="748" Height="125" VerticalScrollBarVisibility="Auto" IsReadOnly="True"/>
+        <Label Content="Текст" HorizontalAlignment="Center" Margin="0,16,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="Cryption_text" HorizontalAlignment="Center" Margin="0,42,0,0" TextWrapping="Wrap" Text=""
+                   VerticalAlignment="Top" Width="748" Height="309" VerticalScrollBarVisibility="Auto" IsReadOnly="True"/>
 
-        <Label Content="Ключ:" HorizontalAlignment="Left" Margin="46,182,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="Key_Decr" HorizontalAlignment="Left" Margin="100,182,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="26"/>
-        <Label Content="Зашифровать текст" HorizontalAlignment="Center" Margin="0,229,0,0" VerticalAlignment="Top"/>
-        <TextBox AcceptsReturn="True" x:Name="Encryption_text" HorizontalAlignment="Center" Margin="0,260,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"
-                 Width="748" Height="130" VerticalScrollBarVisibility="Auto"/>
-        <Label Content="Ключ:" HorizontalAlignment="Left" Margin="34,398,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="Key_Encr" HorizontalAlignment="Left" Margin="88,398,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Height="26"/>
-        <Button x:Name="Decrypt_btn" Content="Расшифровать" HorizontalAlignment="Left" Margin="295,185,0,0" VerticalAlignment="Top" Click="Decrypt_btn_Click"/>
-        <Button x:Name="Encrypt_btn" Content="Зашифровать" HorizontalAlignment="Left" Margin="295,401,0,0" VerticalAlignment="Top" Click="Encrypt_btn_Click"/>
-        <Button x:Name="Save_decr_btn" Content="Сохранить" HorizontalAlignment="Left" Margin="442,185,0,0" VerticalAlignment="Top" Click="Save_decr_btn_Click" IsEnabled="False"/>
-    </Grid>
+        <Label Content="Ключ:" Margin="36,383,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="42"/>
+        <TextBox x:Name="Key" Margin="90,383,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="26" HorizontalAlignment="Left" Width="120"/>
+
+        <Button x:Name="Run_btn" Content="Выполнить" Margin="285,383,0,0" VerticalAlignment="Top" Click="Run_btn_Click" Height="26" HorizontalAlignment="Left" Width="65"/>
+        <Button x:Name="Save_btn" Content="Сохранить" Margin="432,383,0,0" VerticalAlignment="Top" Click="Save_btn_Click" IsEnabled="False" Height="26" HorizontalAlignment="Left" Width="62"/>
+        <ComboBox x:Name="Option" Margin="552,383,0,0" VerticalAlignment="Top" SelectedIndex="0" SelectionChanged="Option_SelectionChanged" Height="26" HorizontalAlignment="Left" Width="158"/>
+    
+        </Grid>
 </Window>

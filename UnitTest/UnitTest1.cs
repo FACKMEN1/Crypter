@@ -1,17 +1,14 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Cursach;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Cursach
+namespace UnitTest
 {
     [TestClass]
-    public class UnitTests
+    public class UnitTest1
     {
         [TestMethod]
-        public void DecryptionTest()
+        public void DecryptionTest1()
         {
             string text = "бщцфаирщри, бл ячъбиуъ щбюэсяёш гфуаа!!! " +
                 "у ъящэячэц ъэюоык, едщ бдв саэацкшгнбяр гчеа кчфцшубп цу ьгщпя вщвсящ, эвэчрысй юяуъщнщхо шпуъликугбз чъцшья с " +
@@ -34,7 +31,7 @@ namespace Cursach
 
         }
         [TestMethod]
-        public void EncryptionTest()
+        public void EncryptionTest1()
         {
             string text = "бебра и 23 меня";
             var key = "беб";
@@ -47,9 +44,45 @@ namespace Cursach
         [ExpectedException(typeof(NullReferenceException))]
         public void DecryptionTest2()
         {
-            string text = "один два три, тесты не работают ни...";
+            string text = "Я в своём познании настолько преисполнился";
             string key = null;
             string res = new Cryption().Decryption(text, key);
+        }
+
+        [TestMethod]
+        public void DecryptionTest3()
+        {
+            string text = "Amogus is sus";
+            string key = "ёж";
+            string expected = "Amogus is sus";
+            string res = new Cryption().Decryption(text, key);
+            Assert.AreEqual(expected, res);
+        }
+
+        [TestMethod]
+        public void EncryptionTest2()
+        {
+            string text = "Зашифрованное сообщение";
+            string key = "ключ";
+            string expected = "Тлцаяьмщкщлёп эмёлегеур";
+            string result = new Cryption().Encryption(text, key);
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod, ExpectedException(typeof(NullReferenceException))]
+        public void EncryptionTest3()
+        {
+            string text = "Зашифрованное сообщение";
+            string key = null;
+            string result = new Cryption().Encryption(text, key);
+        }
+
+        [TestMethod, ExpectedException(typeof(NullReferenceException))]
+        public void EncryptTest1()
+        {
+            string text = "Тестик";
+            string key = null;
+            new Model().Encrypt(text, key);
         }
     }
 }

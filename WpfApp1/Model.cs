@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Cursach
 {
-    internal class Model
+    public class Model
     {
         private string text;
         public string Text { get { return text; } }
@@ -22,11 +22,14 @@ namespace Cursach
 
         public void Decrypt(string key)
         {
+
             var open = new OpenFileDialog();
             open.Filter = "Text files (*.txt)|*.txt";
             try
             {
                 open.ShowDialog();
+                if (string.IsNullOrEmpty(open.FileName))
+                    return;
                 string fileText = "";
                 var fileStream = open.OpenFile();
 
@@ -45,26 +48,26 @@ namespace Cursach
             
         }
 
-        public void Encrypt(string text, string key)
+        public bool Encrypt(string text, string key)
         {
             this.text = cryption.Encryption(text, key);
-            Save(this.text);
-
-
+            return Save(this.text);
         }
 
-        public void Save(string text)
+        public bool Save(string text)
         {
             var save = new SaveFileDialog();
             save.Filter = "Text files (*.txt)|*.txt";
             try
             {
                 save.ShowDialog();
+                if (string.IsNullOrEmpty(save.FileName))
+                    return false;
                 using (StreamWriter writer = new StreamWriter(save.FileName, false, Encoding.GetEncoding(1251)))
                 {
                     writer.Write(text);
                 }
-
+                return true;
             }catch (Exception ex)
             {
                 throw new Exception(ex.Message);
